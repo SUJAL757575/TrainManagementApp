@@ -1,70 +1,108 @@
 import java.util.*;
 
-// Base class for Bogie
-class Bogie {
-    String type;
+class Transaction {
+    int id;
+    double fee;
+    String timestamp;
 
-    public Bogie(String type) {
-        this.type = type;
+    Transaction(int id, double fee, String timestamp) {
+        this.id = id;
+        this.fee = fee;
+        this.timestamp = timestamp;
     }
 }
 
-// Passenger Bogie
-class PassengerBogie extends Bogie {
-    String category;
-    int seatCapacity;
-
-    public PassengerBogie(String category, int seatCapacity) {
-        super("Passenger");
-        this.category = category;
-        this.seatCapacity = seatCapacity;
-    }
-}
-
-// Goods Bogie
-class GoodsBogie extends Bogie {
-    String shape;
-    String cargoType;
-
-    public GoodsBogie(String shape, String cargoType) {
-        super("Goods");
-        this.shape = shape;
-        this.cargoType = cargoType;
-    }
-}
-
-// Main Application Class
 public class TrainManagementApp {
 
-    public static void main(String[] args) {
+    // 🔵 Bubble Sort (≤100)
+    static void bubbleSort(ArrayList<Transaction> list) {
+        int n = list.size();
+        boolean swapped;
 
-        // 1. Welcome Message
-        System.out.println("=== Train Consist Management App ===");
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
 
-        // 2. Initialize Train Consist (Empty List)
-        List<Bogie> trainConsist = new ArrayList<>();
+            for (int j = 0; j < n - i - 1; j++) {
+                if (list.get(j).fee > list.get(j + 1).fee) {
+                    Transaction temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                    swapped = true;
+                }
+            }
 
-        // 3. Display Initial Bogie Count
-        System.out.println("Initial Bogie Count: " + trainConsist.size());
+            if (!swapped) break;
+        }
+    }
 
-        // (Optional demo - adding some bogies)
-        trainConsist.add(new PassengerBogie("Sleeper", 72));
-        trainConsist.add(new PassengerBogie("AC Chair", 50));
-        trainConsist.add(new GoodsBogie("Cylindrical", "Oil"));
+    // 🟢 Insertion Sort (100–1000)
+    static void insertionSort(ArrayList<Transaction> list) {
+        for (int i = 1; i < list.size(); i++) {
+            Transaction key = list.get(i);
+            int j = i - 1;
 
-        // 4. Display Updated Count
-        System.out.println("Updated Bogie Count: " + trainConsist.size());
+            while (j >= 0 && (
+                    list.get(j).fee > key.fee ||
+                            (list.get(j).fee == key.fee &&
+                                    list.get(j).timestamp.compareTo(key.timestamp) > 0)
+            )) {
+                list.set(j + 1, list.get(j));
+                j--;
+            }
 
-        // 5. Display Summary
-        System.out.println("\nTrain Consist Summary:");
-        for (Bogie b : trainConsist) {
-            if (b instanceof PassengerBogie) {
-                PassengerBogie p = (PassengerBogie) b;
-                System.out.println("Passenger - " + p.category + " | Seats: " + p.seatCapacity);
-            } else if (b instanceof GoodsBogie) {
-                GoodsBogie g = (GoodsBogie) b;
-                System.out.println("Goods - " + g.shape + " | Cargo: " + g.cargoType);
+            list.set(j + 1, key);
+        }
+    }
+
+    // 🔴 High-fee outliers (>50)
+    static void findOutliers(ArrayList<Transaction> list) {
+        System.out.println("\nHigh-fee transactions (>50):");
+        boolean found = false;
+
+        for (Transaction t : list) {
+            if (t.fee > 50) {
+                System.out.println("ID: " + t.id + " Fee: " + t.fee);
+                found = true;
             }
         }
+
+        if (!found) {
+            System.out.println("None");
+        }
+    }
+
+    // ⚙️ Main processing logic
+    static void processTransactions(ArrayList<Transaction> list) {
+        int n = list.size();
+
+        if (n <= 100) {
+            System.out.println("\nUsing Bubble Sort (by fee):");
+            bubbleSort(list);
+        } else if (n <= 1000) {
+            System.out.println("\nUsing Insertion Sort (by fee + timestamp):");
+            insertionSort(list);
+        }
+
+        // Print sorted result
+        System.out.println("\nSorted Transactions:");
+        for (Transaction t : list) {
+            System.out.println("ID: " + t.id + ", Fee: " + t.fee + ", Time: " + t.timestamp);
+        }
+
+        // Find outliers
+        findOutliers(list);
+    }
+
+    // 🚀 Main method
+    public static void main(String[] args) {
+
+        ArrayList<Transaction> list = new ArrayList<>();
+
+        // Sample Input
+        list.add(new Transaction(1, 10.5, "10:00"));
+        list.add(new Transaction(2, 25.0, "09:30"));
+        list.add(new Transaction(3, 5.0, "10:15"));
+
+        processTransactions(list);
     }
 }
