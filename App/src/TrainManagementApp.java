@@ -1,56 +1,41 @@
 import java.util.*;
 
-// 🔴 Custom Runtime Exception
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String message) {
-        super(message);
-    }
-}
+public class TrainManagementApp {
 
-// 🧠 Goods Bogie Class
-class GoodsBogie {
-    String type;   // Cylindrical / Rectangular
-    String cargo;
+    // 🔵 Bubble Sort Method
+    static void bubbleSort(int[] arr) {
+        int n = arr.length;
 
-    GoodsBogie(String type) {
-        this.type = type;
-    }
+        for (int i = 0; i < n - 1; i++) {
 
-    // Method to assign cargo safely
-    void assignCargo(String cargo) {
-        try {
-            // 🚫 Safety rule
-            if (type.equals("Rectangular") && cargo.equals("Petroleum")) {
-                throw new CargoSafetyException("Unsafe: Rectangular bogie cannot carry Petroleum");
+            for (int j = 0; j < n - i - 1; j++) {
+
+                if (arr[j] > arr[j + 1]) {
+                    // swap
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
             }
-
-            this.cargo = cargo;
-            System.out.println("Cargo assigned: " + cargo + " to " + type + " bogie");
-
-        } catch (CargoSafetyException e) {
-            System.out.println("Error: " + e.getMessage());
-
-        } finally {
-            System.out.println("Cargo assignment process completed.\n");
         }
     }
-}
-
-public class TrainManagementApp {
 
     public static void main(String[] args) {
 
-        // Create bogies
-        GoodsBogie b1 = new GoodsBogie("Cylindrical");
-        GoodsBogie b2 = new GoodsBogie("Rectangular");
+        // Passenger bogie capacities
+        int[] capacities = {72, 56, 24, 70, 60};
 
-        // ✅ Safe assignment
-        b1.assignCargo("Petroleum");
+        System.out.println("Before Sorting:");
+        for (int c : capacities) {
+            System.out.print(c + " ");
+        }
 
-        // ❌ Unsafe assignment (handled safely)
-        b2.assignCargo("Petroleum");
+        // Apply Bubble Sort
+        bubbleSort(capacities);
 
-        // Program continues
-        System.out.println("Program continues safely...");
+        System.out.println("\nAfter Sorting:");
+        for (int c : capacities) {
+            System.out.print(c + " ");
+        }
     }
 }
