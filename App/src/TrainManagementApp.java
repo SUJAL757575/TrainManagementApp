@@ -4,27 +4,22 @@ public class TrainManagementApp {
 
     public static void main(String[] args) {
 
-        // Create LinkedList for train consist
-        LinkedList<String> train = new LinkedList<>();
+        // Create LinkedHashSet for train formation
+        LinkedHashSet<String> train = new LinkedHashSet<>();
 
         // Add bogies
         train.add("Engine");
         train.add("Sleeper");
-        train.add("AC");
         train.add("Cargo");
         train.add("Guard");
 
-        System.out.println("Initial Train: " + train);
+        // Add duplicate intentionally
+        train.add("Sleeper"); // duplicate (will be ignored)
 
-        // Insert Pantry Car at position 2
-        train.add(2, "Pantry");
-        System.out.println("After adding Pantry at position 2: " + train);
-
-        // Remove first and last bogie
-        train.removeFirst();
-        train.removeLast();
-
-        // Final train consist
-        System.out.println("Final Train Consist: " + train);
+        // Display final train formation
+        System.out.println("Train Formation (Insertion Order + Unique):");
+        for (String bogie : train) {
+            System.out.println(bogie);
+        }
     }
 }
