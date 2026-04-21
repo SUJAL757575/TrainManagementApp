@@ -4,22 +4,19 @@ public class TrainManagementApp {
 
     public static void main(String[] args) {
 
-        // Create LinkedHashSet for train formation
-        LinkedHashSet<String> train = new LinkedHashSet<>();
+        // Create HashMap for bogie-capacity mapping
+        HashMap<String, Integer> bogieCapacity = new HashMap<>();
 
-        // Add bogies
-        train.add("Engine");
-        train.add("Sleeper");
-        train.add("Cargo");
-        train.add("Guard");
+        // Add bogie capacities
+        bogieCapacity.put("Sleeper", 72);
+        bogieCapacity.put("AC Chair", 60);
+        bogieCapacity.put("First Class", 40);
 
-        // Add duplicate intentionally
-        train.add("Sleeper"); // duplicate (will be ignored)
+        // Display bogie capacities
+        System.out.println("Bogie Capacity Details:");
 
-        // Display final train formation
-        System.out.println("Train Formation (Insertion Order + Unique):");
-        for (String bogie : train) {
-            System.out.println(bogie);
+        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
+            System.out.println(entry.getKey() + " -> Capacity: " + entry.getValue());
         }
     }
 }
