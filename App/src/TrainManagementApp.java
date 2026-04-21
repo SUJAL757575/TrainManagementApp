@@ -2,26 +2,37 @@ import java.util.*;
 
 public class TrainManagementApp {
 
+    // 🔍 Linear Search Method
+    static boolean linearSearch(String[] bogies, String key) {
+        for (String b : bogies) {
+            if (b.equals(key)) {
+                return true; // found
+            }
+        }
+        return false; // not found
+    }
+
     public static void main(String[] args) {
 
-        // Array of bogie names
-        String[] bogies = {
-                "Sleeper",
-                "AC Chair",
-                "First Class",
-                "General",
-                "Luxury"
-        };
+        // Array of bogie IDs
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
 
-        // Before sorting
-        System.out.println("Before Sorting:");
-        System.out.println(Arrays.toString(bogies));
+        Scanner sc = new Scanner(System.in);
 
-        // 🔵 Built-in sorting
-        Arrays.sort(bogies);
+        // Input search key
+        System.out.print("Enter Bogie ID to search: ");
+        String searchKey = sc.nextLine();
 
-        // After sorting
-        System.out.println("After Sorting:");
-        System.out.println(Arrays.toString(bogies));
+        // Perform search
+        boolean found = linearSearch(bogieIds, searchKey);
+
+        // Display result
+        if (found) {
+            System.out.println("Bogie found in the train.");
+        } else {
+            System.out.println("Bogie not found.");
+        }
+
+        sc.close();
     }
 }
